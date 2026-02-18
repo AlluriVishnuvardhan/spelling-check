@@ -1,5 +1,9 @@
 Flask
+flask-cors
 PyPDF2
 beautifulsoup4
 requests==2.31.0
 gunicorn
+opencv-python-headless
+pytesseract
+Pillow
