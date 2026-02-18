@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordFix - Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="logo">WordFix</div>
+    
+    <div class="results-container">
+        <h1>Spelling Check Results</h1>
+        
+        <div class="original-text">
+            <h3>Original Text:</h3>
+            <div class="text-display">{{ original_text }}</div>
+        </div>
+
+        {% if mistakes %}
+            <div class="mistakes-found">
+                <h3>Corrections Found ({{ mistakes|length }}):</h3>
+                {% for mistake in mistakes %}
+                    <div class="correction">
+                        <div class="mistake-word">
+                            <span class="wrong">'{{ mistake.word }}'</span> → 
+                            <span class="right">'{{ mistake.suggestion }}'</span>
+                        </div>
+                        {% if mistake.context %}
+                            <div class="context-info">{{ mistake.context }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="perfect">
+                ✅ No mistakes detected! Your text is perfect.
+            </div>
+        {% endif %}
+
+        <div class="back-btn">
+            <a href="/">Check Another Text</a>
+        </div>
+    </div>
+</body>
+</html>

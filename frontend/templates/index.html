@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordFix</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="logo">WordFix</div>
+    <div class="camera-btn-top" onclick="openCamera()">📷 Use Camera</div>
+    
+    <div class="main-content">
+        <h1>Welcome to WordFix</h1>
+        
+        <div class="text-input-center">
+            <form action="/check-text" method="POST" enctype="multipart/form-data">
+                <!-- Upload buttons row -->
+                <div class="upload-buttons-row">
+                    <label for="imageUpload" class="upload-btn image-btn" title="Upload Image">
+                        <span>🖼️ Image</span>
+                    </label>
+                    <input type="file" id="imageUpload" name="image" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                    
+                    <label for="pdfUpload" class="upload-btn pdf-btn" title="Upload PDF">
+                        <span>📄 PDF</span>
+                    </label>
+                    <input type="file" id="pdfUpload" name="pdf" accept=".pdf" style="display: none;" onchange="handlePDFUpload(event)">
+                    
+                    <label for="zipUpload" class="upload-btn zip-btn" title="Upload Website ZIP">
+                        <span>🌐 Website</span>
+                    </label>
+                    <input type="file" id="zipUpload" name="zip" accept=".zip" style="display: none;" onchange="handleZIPUpload(event)">
+                </div>
+                
+                <div class="input-wrapper">
+                    <textarea name="text" id="textInput" placeholder="Type or paste your text here..." required></textarea>
+                </div>
+                <button type="submit" class="check-btn">Check Spelling</button>
+            </form>
+        </div>
+        
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCamera()">&times;</span>
+            <h3>Camera Spell Check</h3>
+            <div class="camera-container">
+                <video id="video" autoplay></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            <div class="camera-controls">
+                <button id="startBtn" onclick="startCamera()">Start Camera</button>
+                <button id="captureBtn" onclick="capturePhoto()" style="display: none;">Capture Photo</button>
+            </div>
+            <div id="cameraResults"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
